@@ -1,0 +1,14 @@
+# Markdown files
+*.md
+
+# dependencies
+node_modules
+
+# production
+build
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
