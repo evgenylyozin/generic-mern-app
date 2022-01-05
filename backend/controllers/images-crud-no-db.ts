@@ -70,7 +70,7 @@ export const putImage = async (req: Request, res: Response) => {
     }
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,
-      message: "The image you are trying to delete is not found"
+      message: "The image you are trying to update is not found"
     })
   } catch (error) {
     return res.status(SERVER_ERROR).json({
