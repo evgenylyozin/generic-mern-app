@@ -43,7 +43,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-              example: { id: 6, name: "Granny", surname: "Loe" }
+              example: { name: "Granny", surname: "Loe", _id: 123 }
         "500":
           description: Unexpected error
           content:

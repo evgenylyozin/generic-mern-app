@@ -1,45 +1,39 @@
 import { SERVER_ERROR, OK, CREATED, NOT_FOUND } from "../utils/status-codes"
 import { Request, Response } from "express"
-import { data } from "../data"
+import { User } from "../mongoose/user-model"
 
-const FIRST_IN_ARRAY = 0
-
-export const getUsers = (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
   try {
-    return res.status(OK).json(data)
+    const allUsers = await User.find({})
+    return res.status(OK).json(allUsers)
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
 
-export const postUser = (req: Request, res: Response) => {
+export const postUser = async (req: Request, res: Response) => {
   try {
-    // To make id property to be of number type
-    const newUser = {
-      ...req.body,
-      id: Number(req.body.id)
-    }
-    const newUsers = [...data].concat(newUser)
-    return res.status(CREATED).json(newUsers)
+    const newUser = new User({ ...req.body })
+    const savedUser = await newUser.save()
+    return res.status(CREATED).json(savedUser)
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
 
-export const deleteUser = (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    const userToDelete = [...data].find((user) => user.id === Number(id))
+    const userToDelete = await User.findOne({ _id: id })
     // Just to keep the logic complete
     if (userToDelete) {
-      const newUsers = [...data].filter((user) => user.id !== Number(id))
-      console.log(newUsers)
+      await User.findOneAndDelete({ _id: id })
       return res.status(OK).json(userToDelete)
     }
 
@@ -50,68 +44,53 @@ export const deleteUser = (req: Request, res: Response) => {
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
 
-export const putUser = (req: Request, res: Response) => {
+export const putUser = async (req: Request, res: Response) => {
   const { id } = req.params
-  const oldUser = [...data].find((user) => user.id === Number(id))
+  const oldUser = User.findOne({ _id: id })
   if (!oldUser) {
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,
       message: "The user you are trying to update is not found"
     })
   }
-  const newUser = {
-    ...req.body,
-    id: Number(req.body.id)
-  }
   try {
-    const newUsers = [...data].map((user) => {
-      if (user.id === Number(id)) {
-        return newUser
-      }
-      return user
-    })
-    console.log(newUsers)
-    return res.status(OK).json(newUsers[FIRST_IN_ARRAY])
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { ...req.body }
+    )
+    return res.status(OK).json(updatedUser)
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
 
-export const patchUser = (req: Request, res: Response) => {
+export const patchUser = async (req: Request, res: Response) => {
   const { id } = req.params
-  const oldUser = [...data].find((user) => user.id === Number(id))
+  const oldUser = User.findOne({ _id: id })
   if (!oldUser) {
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,
       message: "The user you are trying to update is not found"
     })
   }
-  const newUser = {
-    ...oldUser,
-    ...req.body,
-    id: Number(id)
-  }
   try {
-    const newUsers = [...data].map((user) => {
-      if (user.id === Number(id)) {
-        return newUser
-      }
-      return user
-    })
-    console.log(newUsers)
-    return res.status(OK).json(newUsers[FIRST_IN_ARRAY])
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { ...req.body }
+    )
+    return res.status(OK).json(updatedUser)
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }

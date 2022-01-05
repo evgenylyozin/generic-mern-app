@@ -1,0 +1,421 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "CRUD-with-files-no-db"
+servers:
+  - url: "localhost:5000"
+paths:
+  /api/files/images:
+    get:
+      summary: "Get all images links in json format"
+      operationId: getImages
+      responses:
+        "200":
+          description: "All images links are fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                [
+                  "/uploads/images/1.jpg",
+                  "/uploads/images/2.png",
+                  "/uploads/images/3.gif"
+                ]
+        "500":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+    post:
+      summary: "Add a new image"
+      operationId: postImage
+      requestBody:
+        description: "The whole image in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: "Image uploaded"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/images/4.jpg"
+        "400":
+          description: File is not in jpg or png format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 400,
+                  message: "The file you tried to upload is not in jpg or png format"
+                }
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+  /api/files/images/{id}:
+    delete:
+      summary: "Delete an image from the server"
+      operationId: deleteImage
+      parameters:
+        - name: id
+          in: path
+          description: ID of the image
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        "200":
+          description: "Image successfully deleted"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example: ["/uploads/images/2.png", "/uploads/images/3.gif"]
+        "404":
+          description: "Image not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The image you are trying to delete is not found"
+                }
+    put:
+      summary: "Replace the image at specific id"
+      operationId: putImage
+      parameters:
+        - name: id
+          in: path
+          description: ID of the image
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        description: "The whole image in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "Image successfully updated"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/images/1.jpg"
+        "400":
+          description: File is not in jpg or png format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 400,
+                  message: "The file you tried to upload is not in jpg or png format"
+                }
+        "404":
+          description: "Image not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The image you are trying to update is not found"
+                }
+  /api/files/audio:
+    get:
+      summary: "Get all audio links in json format"
+      operationId: getAudio
+      responses:
+        "200":
+          description: "All audio links are fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                ["/uploads/audio/1", "/uploads/audio/2", "/uploads/audio/3"]
+        "500":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+    post:
+      summary: "Add a new audio file"
+      operationId: postAudio
+      requestBody:
+        description: "The whole audio in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                audio:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: "Audio uploaded"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/audio/4"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+  /api/files/audio/{id}:
+    delete:
+      summary: "Delete an audio from the server"
+      operationId: deleteAudio
+      parameters:
+        - name: id
+          in: path
+          description: ID of the audio
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        "200":
+          description: "Audio successfully deleted"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example: ["/uploads/audio/2", "/uploads/audio/3"]
+        "404":
+          description: "Audio not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The audio file you are trying to delete is not found"
+                }
+    put:
+      summary: "Replace the audio at specific id"
+      operationId: putAudio
+      parameters:
+        - name: id
+          in: path
+          description: ID of the audio
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        description: "The whole audio in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                audio:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "Audio successfully updated"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/audio/1"
+        "404":
+          description: "Audio not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The audio file you are trying to update is not found"
+                }
+  /api/files/video:
+    get:
+      summary: "Get all video links in json format"
+      operationId: getVideo
+      responses:
+        "200":
+          description: "All video links are fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                ["/uploads/video/1", "/uploads/video/2", "/uploads/video/3"]
+        "500":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+    post:
+      summary: "Add a new video file"
+      operationId: postVideo
+      requestBody:
+        description: "The whole video in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                video:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: "Video uploaded"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/video/4"
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+  /api/files/video/{id}:
+    delete:
+      summary: "Delete a video from the server"
+      operationId: deleteVideo
+      parameters:
+        - name: id
+          in: path
+          description: ID of the video
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        "200":
+          description: "Video successfully deleted"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example: ["/uploads/video/2", "/uploads/video/3"]
+        "404":
+          description: "Video not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The video file you are trying to delete is not found"
+                }
+    put:
+      summary: "Replace the video at specific id"
+      operationId: putVideo
+      parameters:
+        - name: id
+          in: path
+          description: ID of the video
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        description: "The whole video in binary"
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                video:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "Video successfully updated"
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "/uploads/video/1"
+        "404":
+          description: "Video not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The video file you are trying to update is not found"
+                }
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
