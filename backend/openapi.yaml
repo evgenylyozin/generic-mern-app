@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  version: "1.0.0"
+  title: "CRUD-with-json"
+servers:
+  - url: "localhost:5000"
+paths:
+  /api/json:
+    get:
+      summary: "Get all users info in json format"
+      operationId: getUsers
+      responses:
+        "200":
+          description: "All users are fetched successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+              example:
+                [
+                  { id: 1, name: "John", surname: "Doe" },
+                  { id: 2, name: "Adam", surname: "Smith" },
+                  { id: 3, name: "Eugene", surname: "Yo" },
+                  { id: 4, name: "Bunny", surname: "Woe" },
+                  { id: 5, name: "Sunny", surname: "Hoe" }
+                ]
+        "500":
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+    post:
+      summary: "Add a new user to users array"
+      operationId: postUser
+      responses:
+        "201":
+          description: "User created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example: { id: 6, name: "Granny", surname: "Loe" }
+        "500":
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example: { code: 500, message: "Something unexpected happened" }
+  /api/json/{id}:
+    delete:
+      summary: "Delete a user from the users array"
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        "200":
+          description: "User successfully deleted"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example: { id: 1, name: "John", surname: "Doe" }
+
+        "404":
+          description: "User not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The user you are trying to delete is not found"
+                }
+    put:
+      summary: "Update a user from the users array"
+      operationId: putUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        description: "The whole user object with new properties"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+            example: { id: 1, name: "John", surname: "NotSoDoe" }
+      responses:
+        "200":
+          description: "User successfully updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example: { id: 1, name: "John", surname: "NotSoDoe" }
+        "404":
+          description: "User not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The user you are trying to update is not found"
+                }
+    patch:
+      summary: "Update part of a user from the users array"
+      operationId: patchUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      requestBody:
+        description: "Part of the whole user object with new properties"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PartialUser"
+            example: { surname: "DoeAgain" }
+      responses:
+        "200":
+          description: "User successfully updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example: { id: 1, name: "John", surname: "DoeAgain" }
+        "404":
+          description: "User not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                {
+                  code: 404,
+                  message: "The user you are trying to update is not found"
+                }
+components:
+  schemas:
+    PartialUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        surname:
+          type: string
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - surname
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        surname:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+security:
+  - BasicAuth: []
