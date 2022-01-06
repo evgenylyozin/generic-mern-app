@@ -3,17 +3,17 @@ import {
   deleteAudio,
   getAudio,
   postAudio,
-  putAudio
-} from "../controllers/audio-crud-no-db"
+  getOneAudio
+} from "../controllers/audio-crud-gridfs"
 
 const router = express.Router()
 
 router.get("/", getAudio)
 
+router.get("/:id", getOneAudio)
+
 router.post("/", postAudio)
 
 router.delete("/:id", deleteAudio)
-
-router.put("/:id", putAudio)
 
 export default router

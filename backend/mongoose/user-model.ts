@@ -1,4 +1,4 @@
-import mongoose from "./mongoose-connect"
+import { mongoose } from "./mongoose-connect"
 
 const userSchema = new mongoose.Schema({
   name: String,

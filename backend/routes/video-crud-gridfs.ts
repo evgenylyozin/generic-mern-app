@@ -3,17 +3,17 @@ import {
   deleteVideo,
   getVideo,
   postVideo,
-  putVideo
-} from "../controllers/video-crud-no-db"
+  getOneVideo
+} from "../controllers/video-crud-gridfs"
 
 const router = express.Router()
 
 router.get("/", getVideo)
 
+router.get("/:id", getOneVideo)
+
 router.post("/", postVideo)
 
 router.delete("/:id", deleteVideo)
-
-router.put("/:id", putVideo)
 
 export default router

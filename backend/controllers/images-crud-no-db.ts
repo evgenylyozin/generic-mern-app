@@ -50,7 +50,7 @@ export const deleteImage = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
@@ -75,7 +75,7 @@ export const putImage = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(SERVER_ERROR).json({
       code: SERVER_ERROR,
-      message: "Something unexpected happened"
+      message: error
     })
   }
 }
