@@ -7,7 +7,6 @@ import { DataDiv } from "./data-div"
 
 const StyledMainDiv = styled.div`
   width: 100%;
-  height: 500px;
   display: grid;
   grid-area: main;
   background-color: #b4cfe8;

@@ -7,7 +7,6 @@ import { FormSubheader } from "./form-subheader"
 const StyledFormDiv = styled.div`
   width: 100%;
   grid-area: formdiv;
-  background-color: green;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;
