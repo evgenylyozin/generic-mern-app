@@ -1,7 +1,7 @@
 #root {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  grid-template-rows: 1fr 10fr;
+  grid-template-rows: 100px auto;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:

@@ -24,9 +24,21 @@ export const SwitchFormsDiv = ({
 }) => {
   return (
     <StyledSwitchFormsDiv>
-      <Switch gridarea="one" setMode={setMode} />
-      <Switch gridarea="two" setMode={setMode} />
-      <Switch gridarea="three" setMode={setMode} />
+      <Switch
+        gridarea="one"
+        setMode={setMode}
+        turnedOn={mode === "one" ? true : false}
+      />
+      <Switch
+        gridarea="two"
+        setMode={setMode}
+        turnedOn={mode === "two" ? true : false}
+      />
+      <Switch
+        gridarea="three"
+        setMode={setMode}
+        turnedOn={mode === "three" ? true : false}
+      />
     </StyledSwitchFormsDiv>
   )
 }

@@ -1,5 +1,8 @@
 import React from "react"
 import styled from "styled-components"
+import { StyledButton } from "./generic-styled-components/styled-button"
+import { StyledFileInput } from "./generic-styled-components/styled-file-input"
+import { StyledInput } from "./generic-styled-components/styled-input"
 
 const StyledForm = styled.form`
   width: 100%;
@@ -24,33 +27,6 @@ const FormGroup = styled.div`
   margin-bottom: 30px;
 `
 
-const StyledInput = styled.input`
-  height: 50px;
-  border-radius: 12px;
-  border-width: 0;
-  grid-area: input;
-  padding-left: 20px;
-`
-
-const StyledFileInput = styled.input`
-  grid-area: input;
-  padding-left: 20px;
-`
-
-const StyledButton = styled.div`
-  width: 150px;
-  height: 50px;
-  background-color: #84a5cd;
-  border-radius: 12px;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 16px;
-  align-self: center;
-  margin-bottom: 30px;
-`
 const JsonForm = () => {
   return (
     <StyledForm>
