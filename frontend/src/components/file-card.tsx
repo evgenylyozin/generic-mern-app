@@ -1,16 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  DeleteButton,
-  StyledButton,
-  UpdateButton
-} from "./generic-styled-components/styled-button"
-import {
-  StyledAudio,
-  StyledImg,
-  StyledVideo
-} from "./generic-styled-components/styled-file-displays"
-import { PickFileInput } from "./generic-styled-components/styled-file-input"
+import { GridfsFile } from "../types-schemas/input-types"
+import { AudioForm } from "./audio-form"
+import { ImagesForm } from "./images-form"
+import { VideoForm } from "./video-form"
 
 const StyledFileCard = styled.div`
   background-color: white;
@@ -18,50 +11,51 @@ const StyledFileCard = styled.div`
   width: 45%;
   margin-bottom: 30px;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 0.5fr;
-  grid-template-rows: 0.5fr 5fr 0.5fr 1fr 0.5fr 1fr 0.5fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   gap: 0px 0px;
-  grid-template-areas:
-    ". . . . ."
-    ". file file file ."
-    ". . . . ."
-    ". pick pick update ."
-    ". . . . ."
-    ". delete . . ."
-    ". . . . .";
+  grid-template-areas: "form";
 `
 
-export const FileCard = ({ file, type }: { file: string; type: string }) => {
+export const FileCard = ({
+  file,
+  type,
+  setThereIsNewData
+}: {
+  file: string | GridfsFile
+  type: string
+  setThereIsNewData: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   const returnAppropriateFileDisplay = () => {
     switch (type) {
       case "image":
         return (
           <StyledFileCard>
-            <StyledImg src={file} alt="alt" />
-            <PickFileInput
-              type="file"
-              accept="image/png, image/jpg, image/jpeg"
+            <ImagesForm
+              setThereIsNewData={setThereIsNewData}
+              display={true}
+              file={file}
             />
-            <UpdateButton>Update</UpdateButton>
-            <DeleteButton>Delete</DeleteButton>
           </StyledFileCard>
         )
       case "audio":
         return (
           <StyledFileCard>
-            <StyledAudio controls src={file} />
-            <PickFileInput type="file" accept="audio/mpeg, audio/wave" />
-            <UpdateButton>Update</UpdateButton>
-            <DeleteButton>Delete</DeleteButton>
+            <AudioForm
+              setThereIsNewData={setThereIsNewData}
+              display={true}
+              file={file}
+            />
           </StyledFileCard>
         )
       case "video":
         return (
           <StyledFileCard>
-            <StyledVideo controls src={file} />
-            <PickFileInput type="file" accept="video/mpeg, video/mp4" />
-            <UpdateButton>Update</UpdateButton>
-            <DeleteButton>Delete</DeleteButton>
+            <VideoForm
+              setThereIsNewData={setThereIsNewData}
+              display={true}
+              file={file}
+            />
           </StyledFileCard>
         )
     }

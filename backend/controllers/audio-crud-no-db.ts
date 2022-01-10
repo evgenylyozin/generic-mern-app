@@ -36,12 +36,11 @@ export const postAudio = (req: Request, res: Response) => {
 export const deleteAudio = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    let files = await fs.readdir(path.resolve(__dirname, "../uploads/audio"))
+    const files = await fs.readdir(path.resolve(__dirname, "../uploads/audio"))
     const fileToDelete = files.find((file) => file === id)
     if (fileToDelete) {
       await fs.rm(path.resolve(__dirname, "../uploads/audio", fileToDelete))
-      files = await fs.readdir(path.resolve(__dirname, "../uploads/audio"))
-      return res.status(OK).json(files)
+      return res.status(OK).json(fileToDelete)
     }
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,

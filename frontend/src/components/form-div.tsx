@@ -17,12 +17,18 @@ const StyledFormDiv = styled.div`
     "form";
 `
 
-export const FormDiv = ({ mode }: { mode: string }) => {
+export const FormDiv = ({
+  mode,
+  setThereIsNewData
+}: {
+  mode: string
+  setThereIsNewData: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   return (
     <StyledFormDiv>
       <FormHeader mode={mode} />
       <FormSubheader mode={mode} />
-      <Form mode={mode} />
+      <Form mode={mode} setThereIsNewData={setThereIsNewData} />
     </StyledFormDiv>
   )
 }

@@ -17,12 +17,24 @@ const StyledDataDiv = styled.div`
     "data";
 `
 
-export const DataDiv = ({ mode }: { mode: string }) => {
+export const DataDiv = ({
+  mode,
+  thereIsNewData,
+  setThereIsNewData
+}: {
+  mode: string
+  thereIsNewData: boolean
+  setThereIsNewData: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   return (
     <StyledDataDiv>
       <Divider />
       <DataHeader mode={mode} />
-      <ActualDataDiv mode={mode} />
+      <ActualDataDiv
+        setThereIsNewData={setThereIsNewData}
+        mode={mode}
+        thereIsNewData={thereIsNewData}
+      />
     </StyledDataDiv>
   )
 }

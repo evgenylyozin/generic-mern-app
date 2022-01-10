@@ -1,10 +1,11 @@
 import styled from "styled-components"
 
-export const StyledButton = styled.div`
+export const StyledButton = styled.button`
   width: 150px;
   height: 50px;
   background-color: #84a5cd;
   border-radius: 12px;
+  border-width: 0px;
   display: flex;
   align-content: center;
   justify-content: center;

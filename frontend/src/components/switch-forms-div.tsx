@@ -17,10 +17,12 @@ const StyledSwitchFormsDiv = styled.div`
 
 export const SwitchFormsDiv = ({
   mode,
-  setMode
+  setMode,
+  setThereIsNewData
 }: {
   mode: string
   setMode: React.Dispatch<React.SetStateAction<string>>
+  setThereIsNewData: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   return (
     <StyledSwitchFormsDiv>
@@ -28,16 +30,19 @@ export const SwitchFormsDiv = ({
         gridarea="one"
         setMode={setMode}
         turnedOn={mode === "one" ? true : false}
+        setThereIsNewData={setThereIsNewData}
       />
       <Switch
         gridarea="two"
         setMode={setMode}
         turnedOn={mode === "two" ? true : false}
+        setThereIsNewData={setThereIsNewData}
       />
       <Switch
         gridarea="three"
         setMode={setMode}
         turnedOn={mode === "three" ? true : false}
+        setThereIsNewData={setThereIsNewData}
       />
     </StyledSwitchFormsDiv>
   )

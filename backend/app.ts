@@ -1,6 +1,6 @@
 import express from "express"
 import logger from "morgan"
-
+import cors from "cors"
 import {
   uploadImagesGridfs,
   uploadAudioGridfs,
@@ -27,9 +27,12 @@ import videoCRUDGridFSRouter from "./routes/video-crud-gridfs"
 
 const app = express()
 
+app.use(cors())
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use("/uploads", express.static("uploads"))
 
 app.use("/api/json", noUpload.none(), jsonCRUDRouter)
 

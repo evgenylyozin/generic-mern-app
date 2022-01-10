@@ -36,12 +36,11 @@ export const postVideo = (req: Request, res: Response) => {
 export const deleteVideo = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    let files = await fs.readdir(path.resolve(__dirname, "../uploads/video"))
+    const files = await fs.readdir(path.resolve(__dirname, "../uploads/video"))
     const fileToDelete = files.find((file) => file === id)
     if (fileToDelete) {
       await fs.rm(path.resolve(__dirname, "../uploads/video", fileToDelete))
-      files = await fs.readdir(path.resolve(__dirname, "../uploads/video"))
-      return res.status(OK).json(files)
+      return res.status(OK).json(fileToDelete)
     }
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,

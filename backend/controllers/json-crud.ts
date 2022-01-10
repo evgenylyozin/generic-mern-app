@@ -51,7 +51,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const putUser = async (req: Request, res: Response) => {
   const { id } = req.params
-  const oldUser = User.findOne({ _id: id })
+  const oldUser = await User.findOne({ _id: id })
   if (!oldUser) {
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,
@@ -59,10 +59,8 @@ export const putUser = async (req: Request, res: Response) => {
     })
   }
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: id },
-      { ...req.body }
-    )
+    await User.findOneAndUpdate({ _id: id }, { ...req.body })
+    const updatedUser = await User.findOne({ _id: id })
     return res.status(OK).json(updatedUser)
   } catch (error) {
     return res.status(SERVER_ERROR).json({
@@ -74,7 +72,7 @@ export const putUser = async (req: Request, res: Response) => {
 
 export const patchUser = async (req: Request, res: Response) => {
   const { id } = req.params
-  const oldUser = User.findOne({ _id: id })
+  const oldUser = await User.findOne({ _id: id })
   if (!oldUser) {
     return res.status(NOT_FOUND).json({
       code: NOT_FOUND,

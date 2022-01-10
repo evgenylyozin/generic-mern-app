@@ -23,11 +23,20 @@ const StyledMainDiv = styled.div`
 
 export const MainDiv = () => {
   const [mode, setMode] = useState("one")
+  const [thereIsNewData, setThereIsNewData] = useState(true)
   return (
     <StyledMainDiv>
-      <SwitchFormsDiv mode={mode} setMode={setMode} />
-      <FormDiv mode={mode} />
-      <DataDiv mode={mode} />
+      <SwitchFormsDiv
+        mode={mode}
+        setMode={setMode}
+        setThereIsNewData={setThereIsNewData}
+      />
+      <FormDiv mode={mode} setThereIsNewData={setThereIsNewData} />
+      <DataDiv
+        setThereIsNewData={setThereIsNewData}
+        mode={mode}
+        thereIsNewData={thereIsNewData}
+      />
     </StyledMainDiv>
   )
 }

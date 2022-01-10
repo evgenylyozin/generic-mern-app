@@ -13,14 +13,17 @@ const StyledSwitch = styled("div")<{ gridarea: string; turnedOn: boolean }>`
 export const Switch = ({
   gridarea,
   setMode,
-  turnedOn
+  turnedOn,
+  setThereIsNewData
 }: {
   gridarea: string
   setMode: React.Dispatch<React.SetStateAction<string>>
   turnedOn: boolean
+  setThereIsNewData: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const clickOnSwitchHandler = () => {
     setMode(gridarea)
+    setThereIsNewData(true)
   }
   return (
     <StyledSwitch

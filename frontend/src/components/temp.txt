@@ -1,0 +1,33 @@
+{ 
+    
+    <StyledForm>
+      <FormGroup>
+        <StyledLabel htmlFor="image">Image:</StyledLabel>
+        <StyledFileInput
+          type="file"
+          id="image"
+          accept="image/png, image/jpg, image/jpeg"
+        />
+      </FormGroup>
+
+      <StyledButton>Submit</StyledButton>
+      <FormGroup>
+        <StyledLabel htmlFor="audio">Audio:</StyledLabel>
+        <StyledFileInput
+          type="file"
+          id="audio"
+          accept="audio/mpeg, audio/wave"
+        />
+      </FormGroup>
+      <StyledButton>Submit</StyledButton>
+      <FormGroup>
+        <StyledLabel htmlFor="video">Video:</StyledLabel>
+        <StyledFileInput
+          type="file"
+          id="video"
+          accept="video/mpeg, video/mp4"
+        />
+      </FormGroup>
+      <StyledButton>Submit</StyledButton>
+    </StyledForm>
+  )
